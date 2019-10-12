@@ -1,3 +1,5 @@
+[![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__)
+
 # StatusParser
 Retrive the status codes from a list of URLs
 
@@ -25,6 +27,18 @@ optional arguments:
 python3 statusparser.py -h **Display help menu** \
 python3 statusparser.py -f [**file containing URLS**] -t [**OPTIONAL: Number of threads #Default is 10**] -o [**write to file**] --timeout [**Specify request timeout**]
 
+# Status Codes:
+| Status Code | Description |
+| --- | --- |
+| 200 | OK |
+| 301 | Moved |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 410 | Gone |
+| 500 | Internal Server Error |
+| 503 | Service Unavailable |
+
 # Author:
-Matthew Greer \
-[![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__)
+Matthew Greer
