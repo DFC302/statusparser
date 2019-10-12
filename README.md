@@ -9,6 +9,17 @@ git clone https://github.com/DFC302/statusparser.git
 cd statusparser/ \
 sudo chmod 755 statusparser.py
 
+# Requirements
+Python3
+
+**Modules**\
+requests \
+argparse \
+sys \
+concurrent.futures \
+socket \
+colorama
+
 # Usage:
 ```
 usage: urlparser.py [-h] [-f FILE] [-o OUT] [-t THREADS] [-d]
