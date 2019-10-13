@@ -72,8 +72,14 @@ def url_responses(url, timeout=5):
 	YELLOW = Fore.YELLOW # Status codes
 	WHITE = Fore.WHITE # Information
 	RESET = Style.RESET_ALL # Reset term colors
+        
+        if url.startswith("http://"):
+                url = f"{url}:80"
 
-	if not url.startswith("http://") or not url.startswith("https://"):
+        elif url.startswith("https://"):
+                url = f"{url}:443"
+
+	elif not url.startswith("http://") or not url.startswith("https://"):
 		# Assume http, if https, it should redirect
 		url = f"http://{url}:80" 
 
@@ -83,7 +89,6 @@ def url_responses(url, timeout=5):
 	try:
 		# redirects set to True, verify SSL is False
 		response = requests.head(url, allow_redirects=True, verify=False, timeout=timeout)
-		url = response.url
 		status_code = response.status_code
 		
 		print(f"{GREEN}{url}\n{WHITE}Status Code: {YELLOW}{status_code}\n{RESET}")
