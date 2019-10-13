@@ -73,13 +73,7 @@ def url_responses(url, timeout=5):
 	WHITE = Fore.WHITE # Information
 	RESET = Style.RESET_ALL # Reset term colors
 
-	if url.startswith("http://"):
-		url = f"{url}:80"
-
-	elif url.startswith("https://"):
-		url = f"{url}:443"
-
-	elif not url.startswith("http://") or not url.startswith("https://"):
+	if not url.startswith("http://") or not url.startswith("https://"):
 		# Assume http, if https, it should redirect
 		url = f"http://{url}:80" 
 
@@ -89,6 +83,7 @@ def url_responses(url, timeout=5):
 	try:
 		# redirects set to True, verify SSL is False
 		response = requests.head(url, allow_redirects=True, verify=False, timeout=timeout)
+		url = response.url
 		status_code = response.status_code
 		
 		print(f"{GREEN}{url}\n{WHITE}Status Code: {YELLOW}{status_code}\n{RESET}")
@@ -175,6 +170,36 @@ def url_responses(url, timeout=5):
 				write_to_file(url=url, status_code="UNK")
 
 	except requests.exceptions.TooManyRedirects:
+		try:
+			print(f"{GREEN}{url}\n{WHITE}Status Code: {YELLOW}{status_code}\n{RESET}")
+			pass
+
+			if options().out:
+				write_to_file(url=url, status_code=str(status_code))
+
+		except UnboundLocalError:
+			print(f"{RED}{url}\n{WHITE}Status Code: {YELLOW}Undetermined!\n{RESET}")
+			pass
+
+			if options().out:
+				write_to_file(url=url, status_code="UNK")
+
+	except requests.exceptions.InvalidURL:
+		try:
+			print(f"{GREEN}{url}\n{WHITE}Status Code: {YELLOW}{status_code}\n{RESET}")
+			pass
+
+			if options().out:
+				write_to_file(url=url, status_code=str(status_code))
+
+		except UnboundLocalError:
+			print(f"{RED}{url}\n{WHITE}Status Code: {YELLOW}Undetermined!\n{RESET}")
+			pass
+
+			if options().out:
+				write_to_file(url=url, status_code="UNK")
+
+	except UnicodeError:
 		try:
 			print(f"{GREEN}{url}\n{WHITE}Status Code: {YELLOW}{status_code}\n{RESET}")
 			pass
