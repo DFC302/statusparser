@@ -1,6 +1,8 @@
 [![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__)
 
-# StatusParser
+**Note** \
+This is a work in progress. It's not the best, it works for the most part. Take it with a grain of salt**
+
 Retrive the status codes from a list of URLs
 
 # Installation:
