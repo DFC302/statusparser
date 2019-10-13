@@ -1,9 +1,8 @@
-[![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__)
-
-**Note** \
-This is a work in progress. It's not the best, it works for the most part. Take it with a grain of salt**
-
-Retrive the status codes from a list of URLs
+# StatusParser
+Retrive the status codes from a list of URLs \
+[![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__) \
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) \
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 
 # Installation:
 git clone https://github.com/DFC302/statusparser.git
