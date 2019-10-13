@@ -1,3 +1,5 @@
+**Check changelog.md for all updates to project**
+
 # StatusParser
 [![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__) \
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) \
