@@ -3,6 +3,9 @@
 
 # Version 1.0
 
+# Notes
+**Updates to this project will be coming in the next couple weeks.** 
+
 # Bug fixes
 * None
 
@@ -11,5 +14,5 @@
 
 # Future Changes
 * Check ports other than 80 and 443
-* Ability to use custom ports
-* Betrer error handling and response quality
+* Better error handling and response quality
+* More CLI options 
