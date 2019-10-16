@@ -31,15 +31,15 @@ usage: urlparser.py [-h] [-f FILE] [-o OUT] [-t THREADS] [-d]
 optional arguments:
   -h, --help            show this help message and exit
   -f FILE, --file FILE  Specify input file containing list of URLs
-  -o OUT, --out OUT     Specify output file.
   -t THREADS, --threads THREADS
                         Specify number of threads.
   --timeout TIMEOUT     Specify number in seconds for URL timeout.
 ```
+**Use standard redirection to write to a file**
 
 # Example Usage:
 python3 statusparser.py -h **Display help menu** \
-python3 statusparser.py -f [**file containing URLS**] -t [**OPTIONAL: Number of threads #Default is 10**] -o [**write to file**] --timeout [**Specify request timeout**]
+python3 statusparser.py -f [**file containing URLS**] -t [**OPTIONAL: Number of threads #Default is 10**] --timeout [**Specify request timeout**] >> [file to write too]
 
 # Status Codes:
 | Status Code | Description |
