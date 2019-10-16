@@ -3,10 +3,6 @@
 
 # Version 1.0
 
-**(Oct 16, 2019 12:19am)**
-# Bug fixes
-* Fixed an issue with URL duplication
-
 # Notes
 **Updates to this project will be coming in the next couple weeks.** 
 
