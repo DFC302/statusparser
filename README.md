@@ -13,7 +13,7 @@ Retrieve the status codes from a list of URLs \
 git clone https://github.com/DFC302/statusparser.git
 
 cd statusparser/ \
-sudo chmod 755 statusparser.py
+sudo chmod 755 statusparser
 
 # Requirements:
 [![Python3](https://img.shields.io/badge/Made%20with-Python3-1f425f.svg)](https://shields.io/)
