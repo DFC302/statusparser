@@ -55,7 +55,7 @@ Usage: python3 statusparser -f [List of URLs file]
 
 **Write to file** \
 Usage: python3 statusparser -f [List of URLs file] -o [Write to file] \
-Note: Basic redirection can also be used instead to keep colors in file ">>". WARNING: Doing this, will cause no output to print to screen while statusparser runs. \
+Note: Basic redirection can also be used instead to keep colors in file ">>". WARNING: Doing this, will cause no output to print to screen while statusparser runs.
 
 **Using threads** \
 Usage: python3 statusparser -f [List of URLs file] -t [number of threads #default 20]
