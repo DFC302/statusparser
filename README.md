@@ -38,7 +38,7 @@ optional arguments:
   -o OUT, --out OUT     Specify file to write output too.
   -t THREADS, --threads THREADS
                         Specify number of threads.
-  --timeout TIMEOUT     Specify number in seconds for URL timeout.
+  --timeout TIMEOUT     Specify number in seconds for URL timeout. Default 3
   --errorfile           Erros will be written to Error_report.txt
   --nocolors            Print with no color output.
   --noerrors            Silence errors.
