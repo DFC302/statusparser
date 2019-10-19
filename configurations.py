@@ -27,9 +27,9 @@ def options():
 		type=int,
 	)
 	# Specfify timeout for requests
-	parser.add_argument( # Default is 5
+	parser.add_argument( 
 		"--timeout",
-		help="Specify number in seconds for URL timeout.",
+		help="Specify number in seconds for URL timeout. Default 3",
 		action="store",
 		type=float,
 	)

@@ -26,7 +26,7 @@ class StatusParserColorMode():
 
 	def success(self, url, rurl, port, statuscode):
 		with open(options().out, "a") as f:
-			f.write(f"URL: {url}\nRedirect: {rurl}:{port}\nStatus Code: {statuscode}\n\n")
+			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {statuscode}\n\n")
 
 	def errors(self, url, rurl, status):
 		if options().errorfile:
@@ -40,9 +40,7 @@ class StatusParserColorMode():
 	def parser(self):
 		with open(options().file, "r") as f:
 			# If URL has invalid characterrs in it, replace
-			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") + "/" for url in f]
-
-			# Ignore comment lines starting with a '#'
+			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") for url in f] # took out + /
 			urls = [url for url in urls if not url.startswith("#")]
 
 			# Let user choose threads, else use default of 20
@@ -58,9 +56,6 @@ class StatusParserColorMode():
 					pass
 
 	def url_responses(self, url):
-		# If URl does not start with HTTP://, rewrite URL. Redirects will handle the rest
-		# if not url.startswith("http://"):
-		# 	url = f"http://{url}"
 
 		# If user specifies a different timeout option, else use default of 3
 		if options().timeout:
@@ -84,12 +79,12 @@ class StatusParserColorMode():
 			if url != rurl:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}:{self.MAG}{port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+						print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 					else:
 						pass
 
 				elif not options().statuscode:
-					print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}:{self.MAG}{port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+					print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 
 
 				if options().out:
@@ -105,12 +100,12 @@ class StatusParserColorMode():
 			elif url == url:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL:{self.GREEN} {url}:{self.MAG}{port}\nStatus Code:{self.YELLOW} {status_code}{self.RESET}\n")
+						print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port: {self.MAG} {port}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 					else:
 						pass
 
 				elif not options().statuscode:
-					print(f"URL:{self.GREEN} {url}:{self.MAG}{port}\nStatus Code:{self.YELLOW} {status_code}{self.RESET}\n")
+					print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port:{self.MAG} {port}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 
 				if options().out:
 					if options().statuscode:

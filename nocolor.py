@@ -18,7 +18,7 @@ class StatusParserNoColor():
 
 	def success(self, url, rurl, port, statuscode):
 		with open(options().out, "a") as f:
-			f.write(f"URL: {url}\nRedirect: {rurl}:{port}\nStatus Code: {statuscode}\n\n")
+			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {statuscode}\n\n")
 
 	def errors(self, url, rurl, status):
 		if options().errorfile:
@@ -32,10 +32,7 @@ class StatusParserNoColor():
 	def parser(self):
 		with open(options().file, "r") as f:
 			# If URL has invalid characterrs in it, replace
-			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") + "/" for url in f]
-
-			# Ignore comment lines starting with a '#'
-			urls = [url for url in urls if not url.startswith("#")]
+			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") for url in f]
 
 			# Let user choose threads, else use default of 20
 			if options().threads:
@@ -76,11 +73,11 @@ class StatusParserNoColor():
 			if url != rurl:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL: {url}\nRedirect: {rurl}:{port}\nStatus Code: {status_code}\n")
+						print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {status_code}\n")
 					else:
 						pass
 				elif not options().statuscode:
-					print(f"URL: {url}\nRedirect: {rurl}:{port}\nStatus Code: {status_code}\n")
+					print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {status_code}\n")
 
 				if options().out:
 					if options().statuscode:
