@@ -3,6 +3,7 @@
 </p>
 
 # StatusParser
+[![BuildStatus](https://travis-ci.org/DFC302/statusparser.svg?branch=master)](https://travis-ci.org/DFC302/statusparser) \
 Retrieve the status codes from a list of URLs \
 [![Follow on Twitter](https://img.shields.io/twitter/follow/Vail__.svg?logo=twitter)](https://twitter.com/Vail__)
 
