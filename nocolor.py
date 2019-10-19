@@ -34,6 +34,9 @@ class StatusParserNoColor():
 			# If URL has invalid characterrs in it, replace
 			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") + "/" for url in f]
 
+			# Ignore comment lines starting with a '#'
+			urls = [url for url in urls if not url.startswith("#")]
+
 			# Let user choose threads, else use default of 20
 			if options().threads:
 				threads = options().threads
