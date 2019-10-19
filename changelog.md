@@ -6,6 +6,9 @@
 
 # Changes
 * Ignore comments in file containing list of URLs
+* Removed appened "/" to end of url. Was causing some issues.
+* Removed appended port to url. Port now has its own line when printing results.
+* Removed appended port to url when writing to file. Port now has its own line when writing to results.
 
 
 # Version 2.0.0
