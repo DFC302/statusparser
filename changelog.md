@@ -1,7 +1,14 @@
 # Changelog
 **All notable changes to this project will be recorded here**
 
-# Version 2.0
+# Version 2.1.0
+**(Oct 19 2019)**
+
+# Changes
+* Ignore comments in file containing list of URLs
+
+
+# Version 2.0.0
 **(Oct 17 2019)**
 
 # Changes
