@@ -9,6 +9,8 @@
 * Removed appened "/" to end of url. Was causing some issues.
 * Removed appended port to url. Port now has its own line when printing results.
 * Removed appended port to url when writing to file. Port now has its own line when writing to results.
+* Added IP of URL to each report.
+* IP will also be written to outfile.
 
 
 # Version 2.0.0
