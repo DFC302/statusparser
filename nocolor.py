@@ -16,9 +16,9 @@ class StatusParserNoColor():
 		self.threads = 20
 		self.timeout = 3
 
-	def success(self, url, rurl, port, statuscode):
+	def success(self, url, rurl, port, IP, statuscode):
 		with open(options().out, "a") as f:
-			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {statuscode}\n\n")
+			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {statuscode}\n\n")
 
 	def errors(self, url, rurl, status):
 		if options().errorfile:
@@ -47,10 +47,6 @@ class StatusParserNoColor():
 					pass
 
 	def url_responses(self, url):
-		# If URl does not start with HTTP://, rewrite URL. Redirects will handle the rest
-		# if not url.startswith("http://"):
-		# 	url = f"http://{url}"
-
 		# If user specifies a different timeout option, else use default of 3
 		if options().timeout:
 			timeout = options().timeout
@@ -64,6 +60,8 @@ class StatusParserNoColor():
 			response = requests.head(url, allow_redirects=True, verify=False, timeout=timeout, stream=True, headers=headers)
 			# Grab URL. This will also grab the redirected URL
 			rurl = response.url
+			# Grab IP number of URL
+			IP = str(response.raw._connection.sock.getpeername()[0])
 			# Grab port number requests made connection on
 			port = str(response.raw._connection.sock.getpeername()[1])
 			# Grab status code information
@@ -73,39 +71,39 @@ class StatusParserNoColor():
 			if url != rurl:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {status_code}\n")
+						print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 					else:
 						pass
 				elif not options().statuscode:
-					print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {status_code}\n")
+					print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 
 				if options().out:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=rurl, port=port, statuscode=status_code)
+							self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=rurl, port=port, statuscode=status_code)
+						self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 
 			# If url never redirected
 			elif url == url:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL: {url}:{port}\nStatus Code: {status_code}\n")
+						print(f"URL: {url}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 					else:
 						pass
 				elif not options().statuscode:
-					print(f"URL: {url}:{port}\nStatus Code: {status_code}\n")
+					print(f"URL: {url}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 
 				if options().out:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=None, port=port, statuscode=status_code)
+							self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=None, port=port, statuscode=status_code)
+						self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
 
 		# Connection Errors
 		except requests.ConnectionError:

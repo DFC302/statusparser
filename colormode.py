@@ -14,6 +14,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 class StatusParserColorMode():
 	GREEN = Fore.GREEN # Success
 	BLUE = Fore.BLUE # Success but redirected
+	CYAN = Fore.CYAN # IP
 	RED = Fore.RED # Error
 	YELLOW = Fore.YELLOW # Status codes
 	MAG = Fore.MAGENTA # Port numbers
@@ -24,9 +25,9 @@ class StatusParserColorMode():
 		self.threads = 20
 		self.timeout = 3
 
-	def success(self, url, rurl, port, statuscode):
+	def success(self, url, rurl, port, IP, statuscode):
 		with open(options().out, "a") as f:
-			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nStatus Code: {statuscode}\n\n")
+			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {statuscode}\n\n")
 
 	def errors(self, url, rurl, status):
 		if options().errorfile:
@@ -70,6 +71,8 @@ class StatusParserColorMode():
 			response = requests.head(url, allow_redirects=True, verify=False, timeout=timeout, stream=True, headers=headers)
 			# Grab URL. This will also grab the redirected URL
 			rurl = response.url
+			# Grab IP number of URL
+			IP = str(response.raw._connection.sock.getpeername()[0])
 			# Grab port number requests made connection on
 			port = str(response.raw._connection.sock.getpeername()[1])
 			# Grab status code information
@@ -79,42 +82,42 @@ class StatusParserColorMode():
 			if url != rurl:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+						print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}IP:{self.CYAN} {IP}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 					else:
 						pass
 
 				elif not options().statuscode:
-					print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+					print(f"URL:{self.BLUE} {url}\n{self.WHITE}Redirect:{self.GREEN} {rurl}\n{self.WHITE}Port:{self.MAG} {port}\n{self.WHITE}IP:{self.CYAN} {IP}\n{self.WHITE}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 
 
 				if options().out:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=rurl, port=port, statuscode=status_code)
+							self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=rurl, port=port, statuscode=status_code)
+						self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 
 			# If url never redirected
 			elif url == url:
 				if options().statuscode:
 					if status_code in options().statuscode:
-						print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port: {self.MAG} {port}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+						print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port: {self.MAG} {port}\n{self.WHITE}IP:{self.CYAN} {IP}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 					else:
 						pass
 
 				elif not options().statuscode:
-					print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port:{self.MAG} {port}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
+					print(f"{self.white}URL:{self.GREEN} {url}\n{self.white}Port:{self.MAG} {port}\n{self.WHITE}IP:{self.CYAN} {IP}\n{self.white}Status Code:{self.YELLOW} {status_code}{self.RESET}\n")
 
 				if options().out:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=None, port=port, statuscode=status_code)
+							self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=None, port=port, statuscode=status_code)
+						self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
 
 		# Connection Errors
 		except requests.ConnectionError:
