@@ -49,7 +49,8 @@ optional arguments:
 ```
 # Example Usage:
 
-**File containing URLs must have proper scheme -- http:// or https://**
+**File containing URLs are better off having proper scheme -- http:// or https:// \
+However, if they do not, statusparser will add http:// to the domain in question. If the domain uses https, a redirect will catch it.**
 
 **Basic usage** \
 Usage: python3 statusparser -f [List of URLs file]
