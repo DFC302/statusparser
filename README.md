@@ -100,7 +100,7 @@ Usage: python3 statusparser -f [List of URLs file] -s 200 404 403 (..etc, NO com
 | 503 | Service Unavailable |
 
 # Version
-[![VersionNumber](https://img.shields.io/badge/Version-2.1.0-dark_green.svg)](https://shields.io/)
+[![VersionNumber](https://img.shields.io/badge/Version-2.1.1-dark_green.svg)](https://shields.io/)
 
 # License
 [![LicenseNumber](https://img.shields.io/badge/License-MIT-dark_green.svg)](https://shields.io/)
