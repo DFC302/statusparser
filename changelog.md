@@ -1,6 +1,12 @@
 # Changelog
 **All notable changes to this project will be recorded here**
 
+# Version 2.1.1
+**(Oct 21 2019)**
+
+# Bug Fixes
+* Added support for list of domains that have invalid HTTP scheme. (If url does not start with http://, statusparser will now add it to begining of url. Since redirects are on, if url uses https, it will automatically redirect)
+
 # Version 2.1.0
 **(Oct 19 2019)**
 
