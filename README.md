@@ -11,8 +11,12 @@ Retrieve the status codes from a list of URLs \
 **Check changelog.md for all updates to project**
 
 # Installation:
-git clone https://github.com/DFC302/statusparser.git
+git clone https://github.com/DFC302/statusparser.git \
+python3 setup.py install (may need sudo)
 
+**OR**
+
+git clone https://github.com/DFC302/statusparser.git \
 cd statusparser/ \
 sudo chmod 755 statusparser
 
