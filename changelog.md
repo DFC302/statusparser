@@ -1,6 +1,14 @@
 # Changelog
 **All notable changes to this project will be recorded here**
 
+# Version 2.2.1
+**(Oct 27 2019)**
+
+# Changes
+* Errors can now be written a file named after user, in any directory user has access too. (rather than a program generated name and default directory.).
+* New option, --textfile. Save output into a simple text file report.
+* New option, --csvfile. Save output into a csv file report.
+
 # Version 2.1.1
 **(Oct 21 2019)**
 
