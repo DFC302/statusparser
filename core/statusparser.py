@@ -7,11 +7,11 @@ from core.configurations import options
 
 def main():
 	if options().nocolors:
-		sp = nocolor.StatusParserNoColor()
+		sp = core.nocolor.StatusParserNoColor()
 		sp.parser()
 
 	elif not options().nocolors:
-		sp = colormode.StatusParserColorMode()
+		sp = core.colormode.StatusParserColorMode()
 		sp.parser()
 
 if __name__ == "__main__":
