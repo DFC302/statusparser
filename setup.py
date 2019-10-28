@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
 	name='statusparser',
-	version='2.1.0',
+	version='2.2.1',
 	author="Matthew Greer",
 	author_email="pydev302@gmail.com",
         license='MIT',
@@ -27,4 +27,9 @@ setuptools.setup(
 		"License :: OSI Approved :: MIT License",
 		"Operating System :: OS Independent",
      ],
+        entry_points={
+            'console_scripts': [
+                "statusparser = core.statusparser:main",
+            ],
+        },
 )
