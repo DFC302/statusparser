@@ -15,13 +15,13 @@ def options():
 	# Write output to file
 	parser.add_argument(
 		"--textfile",
-		help="Simple text file output.  Output file=statusparser_report.txt.",
+		help="Write results to simple text file output.",
 		action="store",
 	)
 	# CSV output
 	parser.add_argument(
 		"--csvfile",
-		help="Save results to CSV output. Output file=statusparser_report.csv.",
+		help="Write results to CSV output.",
 		action="store",
 	)
 	# Specify number of threads to use
