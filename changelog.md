@@ -4,6 +4,9 @@
 # Version 2.2.1
 **(Oct 27 2019)**
 
+# Bug Fixes
+* Fixed issue with setup.py not correctly installing.
+
 # Changes
 * Errors can now be written a file named after user, in any directory user has access too. (rather than a program generated name and default directory.).
 * New option, --textfile. Save output into a simple text file report.
