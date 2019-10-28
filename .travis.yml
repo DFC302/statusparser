@@ -6,4 +6,4 @@ install:
  - python3 setup.py install
 
 script:
- - python3 core/statusparser
+ - python3 core/statusparser.py
