@@ -33,18 +33,21 @@ requests.packages.urllib3.exceptions - InsecureRequestWarning
 
 # Usage:
 ```
-usage: statusparser.py [-h] [-f FILE] [-o OUT] [-t THREADS]
-                       [--timeout TIMEOUT] [--errorfile] [--nocolors]
-                       [--noerrors] [-s STATUSCODES [STATUSCODES ...]]
+usage: statusparser [-h] [-f FILE] [--textfile TEXTFILE] [--csvfile CSVFILE]
+                    [-t THREADS] [--timeout TIMEOUT] [--errorfile ERRORFILE]
+                    [--nocolors] [--noerrors] [-s STATUSCODE [STATUSCODE ...]]
 
 optional arguments:
   -h, --help            show this help message and exit
   -f FILE, --file FILE  Specify input file containing list of URLs
-  -o OUT, --out OUT     Specify file to write output too.
+  --textfile TEXTFILE   Write results to simple text file output.
+  --csvfile CSVFILE     Write results to CSV output.
   -t THREADS, --threads THREADS
                         Specify number of threads.
   --timeout TIMEOUT     Specify number in seconds for URL timeout. Default 3
-  --errorfile           Erros will be written to Error_report.txt
+  --errorfile ERRORFILE
+                        Write errors to file. By default, errors are not
+                        written to file.
   --nocolors            Print with no color output.
   --noerrors            Silence errors.
   -s STATUSCODE [STATUSCODE ...], --statuscode STATUSCODE [STATUSCODE ...]
@@ -60,7 +63,8 @@ However, if they do not, statusparser will add http:// to the domain in question
 Usage: python3 statusparser -f [List of URLs file]
 
 **Write to file** \
-Usage: python3 statusparser -f [List of URLs file] -o [Write to file] \
+Usage: python3 statusparser -f [List of URLs file] --csvfile [Write to file] \
+Usage: python3 statusparser -f [List of URLs file] --textfile [Write to file] \
 Note: Basic redirection can also be used instead to keep colors in file ">>". WARNING: Doing this, will cause no output to print to screen while statusparser runs.
 
 **Using threads** \
@@ -72,8 +76,7 @@ Note: Lowering timeout may result in connection errors (false status return) \
 Usage: python3 statusparser -f [List of URLs file] --timeout [number #converted to a floating integer]
 
 **Send errors to a error file** \
-Note: Errors are written to Error_report.txt \
-Note: Errors will continue to be appended to Error_report.txt. Delete or clear if you run multiple tests and do not want mixed or duplicate results. \
+Note: Errors will still be printed to terminal screen, unless option --noerrors is used. \
 Usage: python3 statusparser -f [List of URLs file] --errorfile
 
 **No color mode** \
@@ -82,7 +85,7 @@ Usage: python3 statusparser -f [List of URLs file] --nocolors
 
 **No error mode** \
 Note: Suppress all errors \
-Note: If you want errors written to a file still, you will need to use --errorfile. \
+Note: If you want errors written to a file you will need to use --errorfile [filename] \
 Usage: python3 statusparser -f [List of URLs file] --noerrors
 
 **StatusCode** \
@@ -105,7 +108,7 @@ Usage: python3 statusparser -f [List of URLs file] -s 200 404 403 (..etc, NO com
 | 503 | Service Unavailable |
 
 # Version
-[![VersionNumber](https://img.shields.io/badge/Version-2.1.1-dark_green.svg)](https://shields.io/)
+[![VersionNumber](https://img.shields.io/badge/Version-2.2.1-dark_green.svg)](https://shields.io/)
 
 # License
 [![LicenseNumber](https://img.shields.io/badge/License-MIT-dark_green.svg)](https://shields.io/)
