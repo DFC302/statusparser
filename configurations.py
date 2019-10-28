@@ -14,8 +14,14 @@ def options():
 	)
 	# Write output to file
 	parser.add_argument(
-		"-o", "--out",
-		help="Specify file to write output too.",
+		"--textfile",
+		help="Simple text file output.  Output file=statusparser_report.txt.",
+		action="store",
+	)
+	# CSV output
+	parser.add_argument(
+		"--csvfile",
+		help="Save results to CSV output. Output file=statusparser_report.csv.",
 		action="store",
 	)
 	# Specify number of threads to use
@@ -36,8 +42,8 @@ def options():
 	# Write errors to error file
 	parser.add_argument(
 		"--errorfile",
-		help="Erros will be written to Error_report.txt",
-		action="store_true",
+		help="Write errors to file. By default, errors are not written to file.",
+		action="store",
 	)
 	# Turn off color output
 	parser.add_argument(

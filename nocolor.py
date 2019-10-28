@@ -4,6 +4,8 @@ import requests
 import sys
 import concurrent.futures
 import socket
+import csv
+import os
 
 from configurations import options	
 # Suppress errors if verify is turned off
@@ -16,18 +18,34 @@ class StatusParserNoColor():
 		self.threads = 20
 		self.timeout = 3
 
-	def success(self, url, rurl, port, IP, statuscode):
-		with open(options().out, "a") as f:
+	# Simple text report
+	def success_txt(self, url, rurl, port, IP, statuscode):
+		with open(options().textfile, "a") as f:
 			f.write(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {statuscode}\n\n")
 
-	def errors(self, url, rurl, status):
-		if options().errorfile:
-			with open("Error_report.txt", "a") as ef:
-				ef.write(f"URL: {url}\nRedirect: {rurl}\nStatus: {status}\n\n")
+	# CSV report
+	def success_csv(self, url, rurl, port, IP, statuscode):
+		if options().csvfile:
+			if not options().csvfile.endswith(".csv"):
+				csvfile = f"{options().csvfile}.csv"
+			else:
+				csvfile = options().csvfile
 
-		elif not options().errorfile:
-			with open(options().out, "a") as ef:
-				ef.write(f"URL: {url}\nRedirect: {rurl}\nStatus: {status}\n\n")
+			if os.path.isfile(csvfile):
+				pass
+			else:
+				with open(csvfile, "w") as csvf:
+					writer = csv.writer(csvf, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+					writer.writerow(["URL", "REDIRECT", "PORT", "IP", "STATUS CODE"])
+		
+		with open(csvfile, "a") as csvf:
+			writer = csv.writer(csvf, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)	
+			writer.writerow([url, rurl, port, IP, statuscode])
+
+
+	def errors(self, url, rurl, status):
+		with open(options().errorfile, "a") as ef:
+			ef.write(f"URL: {url}\nRedirect: {rurl}\nStatus: {status}\n\n")
 
 	def parser(self):
 		with open(options().file, "r") as f:
@@ -80,14 +98,23 @@ class StatusParserNoColor():
 				elif not options().statuscode:
 					print(f"URL: {url}\nRedirect: {rurl}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 
-				if options().out:
+				if options().textfile:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+							self.success_txt(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+						self.success_txt(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+
+				if options().csvfile:
+					if options().statuscode:
+						if status_code in options().statuscode:
+							self.success_csv(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+						else:
+							pass
+					elif not options().statuscode:
+						self.success_csv(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 
 			# If url never redirected
 			elif url == url:
@@ -99,14 +126,23 @@ class StatusParserNoColor():
 				elif not options().statuscode:
 					print(f"URL: {url}\nPort: {port}\nIP: {IP}\nStatus Code: {status_code}\n")
 
-				if options().out:
+				if options().textfile:
 					if options().statuscode:
 						if status_code in options().statuscode:
-							self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
+							self.success_txt(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 						else:
 							pass
 					elif not options().statuscode:
-						self.success(url=url, rurl=None, port=port, IP=IP, statuscode=status_code)
+						self.success_txt(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+
+				if options().csvfile:
+					if options().statuscode:
+						if status_code in options().statuscode:
+							self.success_csv(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
+						else:
+							pass
+					elif not options().statuscode:
+						self.success_csv(url=url, rurl=rurl, port=port, IP=IP, statuscode=status_code)
 
 		# Connection Errors
 		except requests.ConnectionError:
@@ -117,10 +153,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Connection Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Connection Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Connection Error")
 
 		# Invalid URL Errors
@@ -132,10 +165,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: GAI Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="GAI Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="GAI Error")
 
 		except requests.exceptions.InvalidURL:
@@ -146,10 +176,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Invalid URL Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Invalid URL Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Invalid URL Error")
 
 		except requests.exceptions.MissingSchema:
@@ -160,10 +187,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Invalid URL Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Invalid URL Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Invalid URL Error")
 
 		# Timeout Errors
@@ -175,10 +199,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Timeout Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Timeout Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Timeout Error")
 
 		except requests.exceptions.ReadTimeout:
@@ -189,10 +210,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Read Timeout Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Read Timeout Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Read Timeout Error")
 
 		# Redirect Errors
@@ -204,10 +222,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Too Many Redirects Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Too Many Redirects Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Too Many Redirects Error")
 
 		# MISC Errors
@@ -219,10 +234,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Type Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Type Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Type Error")
 
 		except UnicodeError:
@@ -233,10 +245,7 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nStatus: Unicode Error\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=None, status="Unicode Error")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=None, status="Unicode Error")
 
 		except AttributeError:
@@ -247,15 +256,9 @@ class StatusParserNoColor():
 				print(f"URL: {url}\nRedirect: {rurl}\nStatus Code: Undetermined\nStatus Code Probability: 200\n")
 				pass
 
-			if options().out:
-				self.errors(url=url, rurl=rurl, status="Undetermined\nStatus Code Probability: 200")
-
-			elif options().errorfile:
+			if options().errorfile:
 				self.errors(url=url, rurl=rurl, status="Undetermined\nStatus Code Probability: 200")
 
 		# If user cancels program
 		except KeyboardInterrupt:
 			sys.exit(0)
-
-# sp = StatusParserNoColor()
-# sp.parser()
