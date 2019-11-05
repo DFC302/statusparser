@@ -29,7 +29,7 @@ setuptools.setup(
      ],
         entry_points={
             'console_scripts': [
-                "statusparser = core.statusparser:main",
+                "statusparser = statusparser_core.statusparser:main",
             ],
         },
 )
