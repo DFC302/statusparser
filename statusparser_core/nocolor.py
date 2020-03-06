@@ -52,7 +52,7 @@ class StatusParserNoColor():
 			# If URL has invalid characterrs in it, replace
 			urls = [url.strip("\n").replace("__", "://").replace("_", ".").replace("*.", "http://") for url in f]
 			urls = [url for url in urls if not url.startswith("#")]
-			# If url does not start with http://, add it, redirect will handle the rest
+			# If url does not start with http://
 			urls = [f"http://{url}" for url in urls if not url.startswith("http")]
 
 			# Let user choose threads, else use default of 20
